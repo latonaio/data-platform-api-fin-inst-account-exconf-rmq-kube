@@ -67,22 +67,22 @@ func (e *ExistenceConf) confFinInstAccountHeader(input *dpfm_api_input_reader.He
 	}
 	if input.FinInstAccountHeader.FinInstCountry == nil {
 		return &exconf
-    }
+	}
 	if input.FinInstAccountHeader.FinInstBusinessPartner == nil {
 		return &exconf
-    }
+	}
 	if input.FinInstAccountHeader.InternalFinInstCustomerID == nil {
 		return &exconf
-    }
+	}
 	if input.FinInstAccountHeader.AccountBusinessPartner == nil {
 		return &exconf
-    }
+	}
 	if input.FinInstAccountHeader.FinInstCustomerIDByFinInst == nil {
 		return &exconf
-    }
+	}
 	if input.FinInstAccountHeader.ValidityEndDate == nil {
 		return &exconf
-    }
+	}
 	if input.FinInstAccountHeader.ValidityStartDate == nil {
 		return &exconf
 	}
@@ -90,16 +90,16 @@ func (e *ExistenceConf) confFinInstAccountHeader(input *dpfm_api_input_reader.He
 		return &exconf
 	}
 	exconf = dpfm_api_output_formatter.FinInstAccountHeader{
-		FinInstCountry:            *input.FinInstAccountHeader.FinInstCountry,
-        FinInstCode:               *input.FinInstAccountHeader.FinInstCode,
-        FinInstBusinessPartner:    *input.FinInstAccountHeader.FinInstBusinessPartner,
-        InternalFinInstCustomerID: *input.FinInstAccountHeader.InternalFinInstCustomerID,
-        AccountBusinessPartner:    *input.FinInstAccountHeader.AccountBusinessPartner,
-        FinInstCustomerIDByFinInst:*input.FinInstAccountHeader.FinInstCustomerIDByFinInst,
-        ValidityEndDate:           *input.FinInstAccountHeader.ValidityEndDate,
-        ValidityStartDate:         *input.FinInstAccountHeader.ValidityStartDate,
-        IsMarkedForDeletion:       *input.FinInstAccountHeader.IsMarkedForDeletion,
-		ExistenceConf:  false,
+		FinInstCountry:             *input.FinInstAccountHeader.FinInstCountry,
+		FinInstCode:                *input.FinInstAccountHeader.FinInstCode,
+		FinInstBusinessPartner:     *input.FinInstAccountHeader.FinInstBusinessPartner,
+		InternalFinInstCustomerID:  *input.FinInstAccountHeader.InternalFinInstCustomerID,
+		AccountBusinessPartner:     *input.FinInstAccountHeader.AccountBusinessPartner,
+		FinInstCustomerIDByFinInst: *input.FinInstAccountHeader.FinInstCustomerIDByFinInst,
+		ValidityEndDate:            *input.FinInstAccountHeader.ValidityEndDate,
+		ValidityStartDate:          *input.FinInstAccountHeader.ValidityStartDate,
+		IsMarkedForDeletion:        *input.FinInstAccountHeader.IsMarkedForDeletion,
+		ExistenceConf:              false,
 	}
 
 	rows, err := e.db.Query(
@@ -112,6 +112,7 @@ func (e *ExistenceConf) confFinInstAccountHeader(input *dpfm_api_input_reader.He
 		e.l.Error(err)
 		return &exconf
 	}
+	defer rows.Close()
 
 	exconf.ExistenceConf = rows.Next()
 	return &exconf
@@ -159,19 +160,19 @@ func (e *ExistenceConf) ConfFinInstAccountItem(input *dpfm_api_input_reader.Item
 	}
 
 	exconf = dpfm_api_output_formatter.FinInstAccountItem{
-		FinInstCountry:           *input.FinInstAccountItem.FinInstCountry,
-        FinInstCode:              *input.FinInstAccountItem.FinInstCode,
-        FinInstBranchCode:        *input.FinInstAccountItem.FinInstBranchCode,
-        FinInstFullCode:          *input.FinInstAccountItem.FinInstFullCode,
-        InternalFinInstCustomerID:*input.FinInstAccountItem.InternalFinInstCustomerID,
-        InternalFinInstAccountID: *input.FinInstAccountItem.InternalFinInstAccountID,
-        ValidityEndDate:          *input.FinInstAccountItem.ValidityEndDate,
-        ValidityStartDate:        *input.FinInstAccountItem.ValidityStartDate,
-        FinInstControlKey:        *input.FinInstAccountItem.FinInstControlKey,
-        FinInstAccountName:       *input.FinInstAccountItem.FinInstAccountName,
-        FinInstAccount:           *input.FinInstAccountItem.FinInstAccount,
-        IsMarkedForDeletion:      *input.FinInstAccountItem.IsMarkedForDeletion,
-		ExistenceConf:     false,
+		FinInstCountry:            *input.FinInstAccountItem.FinInstCountry,
+		FinInstCode:               *input.FinInstAccountItem.FinInstCode,
+		FinInstBranchCode:         *input.FinInstAccountItem.FinInstBranchCode,
+		FinInstFullCode:           *input.FinInstAccountItem.FinInstFullCode,
+		InternalFinInstCustomerID: *input.FinInstAccountItem.InternalFinInstCustomerID,
+		InternalFinInstAccountID:  *input.FinInstAccountItem.InternalFinInstAccountID,
+		ValidityEndDate:           *input.FinInstAccountItem.ValidityEndDate,
+		ValidityStartDate:         *input.FinInstAccountItem.ValidityStartDate,
+		FinInstControlKey:         *input.FinInstAccountItem.FinInstControlKey,
+		FinInstAccountName:        *input.FinInstAccountItem.FinInstAccountName,
+		FinInstAccount:            *input.FinInstAccountItem.FinInstAccount,
+		IsMarkedForDeletion:       *input.FinInstAccountItem.IsMarkedForDeletion,
+		ExistenceConf:             false,
 	}
 	rows, err := e.db.Query(
 		`SELECT FinInstCode 
@@ -183,6 +184,7 @@ func (e *ExistenceConf) ConfFinInstAccountItem(input *dpfm_api_input_reader.Item
 		e.l.Error(err)
 		return &exconf
 	}
+	defer rows.Close()
 
 	exconf.ExistenceConf = rows.Next()
 	return &exconf
